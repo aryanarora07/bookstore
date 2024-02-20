@@ -1,14 +1,25 @@
-import experss from "express";
+import express from "express";
 import {mongoDBurl} from "./config.js";
 import mongoose from "mongoose";
-import { error } from "console";
+import bookRoutes from "./routes/bookRoutes.js"
+import cors from "cors"
 
-const app = experss();
+
+
+
+const app = express();
+
+app.use(express.json());
+
+app.use(cors());
 
 app.get('/', (request, response)=>{
 
     return response.status(234).send("kiddan jatto");
 })
+
+app.use('/books', bookRoutes);
+
 
 mongoose.connect(mongoDBurl)
 .then(()=>{
@@ -17,6 +28,6 @@ mongoose.connect(mongoDBurl)
 })
 .catch((error)=>{
     console.log(error);
-    ///
+    
 })
 
